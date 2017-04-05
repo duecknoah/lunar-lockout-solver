@@ -34,11 +34,10 @@ public class Main {
 		boolean doOutFile = false; // do output json or solution?
 		File outFilePath = null; // the output file path for the solution string and or board json file
 		// Printing
-		boolean verbose = false; // print lots of extra processing data?
 		String helpScreen = "";
-		helpScreen += "Usage: java -jar LLSolver -g <-t TOTALROBOTS> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p> <-verbose>\n"
-				+ "or java -jar LLSolver -s <-in JSONFILE> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p> <-verbose>\n"
-				+ "or java -jar LLSolver -g -s <-t TOTALROBOTS> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p> <-verbose>\n\n";
+		helpScreen += "Usage: java -jar LLSolver -g <-t TOTALROBOTS> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p>\n"
+				+ "or java -jar LLSolver -s <-in JSONFILE> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p>\n"
+				+ "or java -jar LLSolver -g -s <-t TOTALROBOTS> <-min MINIMUM_STEPS> <-max MAXIMUM_STEPS> <-out FILEPATH/JSONFILEPATH> <-p>\n\n";
 		helpScreen += "What is Lunar Lockout?:\n"
 				+ "Lunar Lockout is a game played on a 5x5 board with up to 6 space robots. The objective "
 				+ "of the game is to move the player robot (red) to the center (the motherships landing grid) at (3, 3).\n\n"
@@ -59,8 +58,7 @@ public class Main {
 				+ " -max MAXIMUM_STEPS	the maximum steps required to solve or generate the solution\n"
 				+ " -in JSONFILE		indicates JSON file/filepath of board data to be solved\n"
 				+ " -out FILE/JSONFILE	indicates file/filepath of the solution and or board JSON to be outputted to after\n"
-				+ " -p					prints the json of the solved or generated board\n"
-				+ " -verbose			Shows all processing console output\n";
+				+ " -p					prints the json of the solved or generated board\n";
 		if (args.length == 0) {
 			System.out.println("\n" + helpScreen);
 			return;
@@ -112,9 +110,6 @@ public class Main {
 			else if (args[i].equals("-p")) {
 				printJSONOutput = true;
 			}
-			else if (args[i].equals("-verbose")) {
-				verbose = true;
-			}
 		}
 		
 		if (doSolve == false && doGen == false) {
@@ -122,7 +117,6 @@ public class Main {
 			return;
 		}
 		
-		// TODO: Improve all code below
 		// Generating
 		LevelGenerator level = null; // this can also be used in doSolve after generation to show solution (-g -s)
 		
@@ -159,13 +153,14 @@ public class Main {
 						// Parse JSON and print board layout
 						level = new LevelGenerator();
 						level.getBoard().parseJSON(levelJSON);
+						System.out.println("Board data read from: " + inJSONFilePath.toString());
 					}
 					catch (ParseException e) {
-						System.out.println("Error parsing JSON file: " + inJSONFilePath.toString());
+						System.out.println("Error parsing JSON in Board file: " + inJSONFilePath.toString());
 						return;
 					}
 					catch (IOException e) {
-						System.out.println("File input error. Check that the file path is correct");
+						System.out.println("Board file input error. Check that the file path is correct.");
 						return;
 					}
 				}
@@ -231,7 +226,10 @@ public class Main {
 				System.out.println(invalidPosE.getMessage() + "\nCancelled.");
 				return;
 			}
-			level.getBoard().printBoard();
+			// If have not printed board already, then do so
+			if (!doGen) {
+				level.getBoard().printBoard();
+			}
 			// Solve 
 			Solver solver = new Solver();
 			level.setSolution(solver.solve(level.getBoard(), maxSteps, true));
@@ -246,13 +244,13 @@ public class Main {
 				if (doSolve) {
 					otherData += "\nSolution:\n" + sol;
 				}
-				sFile.write(level.getBoard().toJSON().toJSONString() + "\n");
+				sFile.write(level.getBoard().toJSON().toJSONString() + "\n\nBoard data:\n");
 				sFile.write(otherData);
 				sFile.close();
-				System.out.println("File outputted to: " + outFilePath.toString());
+				System.out.println("Board data outputted to: " + outFilePath.toString());
 			}
 			catch (IOException e) {
-				System.out.println("File output error. Check the file path is correct");
+				System.out.println("Board data output error. Check the file path is correct");
 			}
 		}
 	}

@@ -39,7 +39,7 @@ public class Solution {
 			return null;
 		}
 		String sol = "";
-		System.out.println("Total moves: " + (boardStates.size() - 1));
+		sol += "Total moves: " + (boardStates.size() - 1) + "\n";
 		// Loop starts from the end and works its way to index 0. Note that although the for loop
 		// only goes down to 1, the bNext (next board) always has the index of (iBoardState - 1)
 		for (int iBoardState = boardStates.size() - 1; iBoardState > 0; iBoardState --) {

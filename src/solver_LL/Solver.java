@@ -30,7 +30,9 @@ public class Solver {
 			i ++;
 		}
 		// If still no solution
-		System.out.println("No solution!");
+		if (doPrintActions) {
+			System.out.println("No solution!");
+		}
 		return finalSol; // null
 	}
 	
