@@ -58,23 +58,8 @@ public class LevelGenerator {
 			boolean foundFreePos = false; // found free pos for robot?
 			boolean isPlayer = (i == 0) ? true : false; // make robot player if on index 0
 			Robot rNew = new Robot(0, 0, isPlayer, ""); // new robot
-			
-			switch(i) {
-			case 0: rNew.setColor("Red");
-			break;
-			case 1: rNew.setColor("Orange");
-			break;
-			case 2: rNew.setColor("Yellow");
-			break;
-			case 3: rNew.setColor("Green");
-			break;
-			case 4: rNew.setColor("Blue");
-			break;
-			case 5: rNew.setColor("Purple");
-			break;
-			// More than actual game at this point
-			default: rNew.setColor("Color" + i);
-			}
+
+			rNew.setColor(Robot.intToColor(i));
 			
 			// Search for a random free position
 			while (!foundFreePos) {
@@ -108,6 +93,10 @@ public class LevelGenerator {
 	
 	public void setSolution(Solution solution) {
 		this.solution = solution;
+	}
+	
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 	
 	public Solution getSolution() {

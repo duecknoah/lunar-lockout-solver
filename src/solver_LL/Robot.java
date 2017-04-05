@@ -58,8 +58,11 @@ public class Robot {
 	}
 	
 	public void setPos(BoardPos pos) { 
-		this.posPrev = new BoardPos(pos); // copy pos before change
-		this.pos = pos;
+		if (pos.isOnBoard(pos)) {
+			this.posPrev = new BoardPos(pos); // copy pos before change
+			this.pos = pos;
+		}
+		else throw new IllegalArgumentException("Invalid position! x and y nust be between 1-5");
 	}
 
 	public String getColor() {
@@ -68,6 +71,19 @@ public class Robot {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+	
+	public static String intToColor(int colorID) {
+		switch(colorID) {
+		case 0: return "Red";
+		case 1: return "Orange";
+		case 2: return "Yellow";
+		case 3: return "Green";
+		case 4: return "Blue";
+		case 5: return "Purple";
+		// More than actual game at this point
+		default: return "Color" + colorID;
+		}
 	}
 
 	public boolean isPlayer() {

@@ -55,6 +55,16 @@ public class BoardPos {
 		return false;
 	}
 	
+	// Checks to see if the specified position is on the
+	// board
+	public boolean isOnBoard(BoardPos pos) {
+		if (pos.getX() > 0 && pos.getX() <= Board.xSize
+				&& pos.getY() > 0 && pos.getY() <= Board.ySize) {
+			return true;
+		}
+		return false;
+	}
+	
 	// returns the distance to another position from this position
 	public int distTo(BoardPos otherPos) {
 		return Math.abs((x - otherPos.getX()) + (y - otherPos.getY()));

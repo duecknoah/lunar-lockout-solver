@@ -34,8 +34,11 @@ public class Solution {
 	}
 	
 	public String getSolutionString() {
+		// Check if no solution, if so, return null
+		if (boardStates.isEmpty()) {
+			return null;
+		}
 		String sol = "";
-		
 		System.out.println("Total moves: " + (boardStates.size() - 1));
 		// Loop starts from the end and works its way to index 0. Note that although the for loop
 		// only goes down to 1, the bNext (next board) always has the index of (iBoardState - 1)

@@ -9,9 +9,9 @@ import java.lang.IllegalArgumentException;
 
 // The game board for all the robots
 public class Board {
-	private static int xSize = 5; // the xSize/width of the board
-	private static int ySize = 5; // the ySize/height of the board
-	private static BoardPos fin = new BoardPos(3, 3); // the finishing coordinates for the player to be to win
+	public static final int xSize = 5; // the xSize/width of the board
+	public static final int ySize = 5; // the ySize/height of the board
+	public static final BoardPos fin = new BoardPos(3, 3); // the finishing coordinates for the player to be to win
 	private ArrayList<Robot> robots = new ArrayList<>();
 	
 	Board(ArrayList<Robot> robots) {
@@ -34,6 +34,18 @@ public class Board {
 		return robots;
 	}
 	
+	// Attempts to add the robot to the board
+	public void addRobot(Robot r) {
+		robots.add(r);
+		validateRobotPositions();
+	}
+	
+	// Attempts to remove an existing robot from
+	// the board
+	public void removeRobot(Robot r) {
+		getRobots().remove(r);
+	}
+	
 	public int getXSize() {
 		return xSize;
 	}
@@ -42,13 +54,15 @@ public class Board {
 		return ySize;
 	}
 
-	private void validateRobotPositions() {
+	public void validateRobotPositions() {
 		ArrayList<BoardPos> usedPos = new ArrayList<>();
 		for (Robot r : robots) {
 			for (BoardPos u : usedPos) {
 				// If this current robot is in another used robots position
 				if (r.getPos().positionMeeting(u)) {
-					throw new IllegalArgumentException("Invalid pos! It has been taken by another robot.");
+					// undo the overlap before throwing the error
+					robots.remove(r);
+					throw new IllegalArgumentException("Invalid pos! Robots are overlapping!");
 				}
 			}
 			// Else if position is not used, add it to the used positions array
@@ -293,7 +307,8 @@ public class Board {
 		String strData = "";
 		for (int i = 0; i < robots.size(); i ++) {
 			Robot r = robots.get(i);
-			strData += "Robot[" + i + "]: pos: (" + r.getPos().getX() + ", " + r.getPos().getY() + "), color: (" + r.getColor() + "), isPlayer = " + r.isPlayer();
+			strData += (r.isPlayer()) ? "Player Robot" : "Robot";
+			strData += " (" + r.getColor() + ") at position (" + r.getPos().getX() + ", " + r.getPos().getY() + ")";
 			strData += '\n';
 		}
 		return strData;

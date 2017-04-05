@@ -81,8 +81,13 @@ public class Main {
 			}
 			else if (args[i].equals("-t")) {
 				totalBots = Integer.valueOf(args[i + 1]);
-				if (totalBots > 10) {
-					throw new IllegalArgumentException("There must be no more than 10 bots!");
+				if (totalBots > 6) {
+					System.out.println("There must be no more than 6 bots!");
+					return;
+				}
+				if (totalBots < 2) {
+					System.out.println("There cannot be less than 2 bots!");
+					return;
 				}
 				i ++;
 			}
@@ -169,23 +174,62 @@ public class Main {
 					Scanner userInput = new Scanner(System.in);
 					boolean isDone = false;
 					int currentRobot = 0;
-					Board boardToSolve;
-					ArrayList<Robot> robots = new ArrayList<>();
-					//boolean first
+					Board boardToSolve = new Board();
 					
-					while (!isDone) {
+					System.out.println("Total robots: " + totalBots);
+					System.out.print("Player Robot (" + Robot.intToColor(currentRobot) + ") coords (x y): ");
+					// Loop through robots to enter in coordinate data
+					while (currentRobot < totalBots) {
 						if (userInput.hasNextLine()) {
-							//userInput.
 							if (userInput.hasNextInt()) {
 								Robot r = new Robot();
-								String input = userInput.next();
+								String inputX = userInput.next();
+								String inputY = userInput.next();
 								
-								// loop x
-								// 	Player Robot coords: x y
+								// If valid input integers (coordinates)
+								if (inputX != null && inputY != null) {
+									try {
+										BoardPos b = new BoardPos(Integer.valueOf(inputX), Integer.valueOf(inputY));
+										r.setPos(b);
+										r.setColor(Robot.intToColor(currentRobot));
+										// The first robot is always the player
+										if (currentRobot == 0) {
+											r.setPlayer(true);
+										}
+										boardToSolve.addRobot(r);
+										currentRobot ++;
+										// Print the line for the next input and clear any other user input
+										userInput.nextLine();
+										// If still going to loop next time around
+										if (currentRobot < totalBots) {
+											System.out.print(Robot.intToColor(currentRobot) + " Robot coords (x y): ");
+										}
+									}
+									catch (NumberFormatException e) {
+										System.out.println("Please enter two numbers for the coordinates.");
+									}
+									catch (IllegalArgumentException e) {
+										System.out.println(e.getMessage());
+									}
+								}
+							}
+							else {
+								System.out.println("Please enter two numbers for the coordinates.");
+								userInput.next();
 							}
 						}
 					}
+					// Set the board to be created based off user's inputted robots
+					level = new LevelGenerator(totalBots, minSteps, maxSteps);
+					level.setBoard(boardToSolve);
 				}
+			}
+			try {
+			level.getBoard().validateRobotPositions();
+			}
+			catch (IllegalArgumentException invalidPosE) {
+				System.out.println(invalidPosE.getMessage() + "\nCancelled.");
+				return;
 			}
 			level.getBoard().printBoard();
 			// Solve 
@@ -194,7 +238,7 @@ public class Main {
 			
 		}
 		// Final file output handling
-		String sol = level.getSolution().getSolutionString();
+		String sol = (level.getSolution() == null) ? "No solution!" : level.getSolution().getSolutionString();
 		// Now check if the user wants to output the map layout and solution to it in a file
 		if (doOutFile) {
 			try (FileWriter sFile = new FileWriter(outFilePath)) {
@@ -205,6 +249,7 @@ public class Main {
 				sFile.write(level.getBoard().toJSON().toJSONString() + "\n");
 				sFile.write(otherData);
 				sFile.close();
+				System.out.println("File outputted to: " + outFilePath.toString());
 			}
 			catch (IOException e) {
 				System.out.println("File output error. Check the file path is correct");
