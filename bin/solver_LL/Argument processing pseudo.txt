@@ -1,0 +1,57 @@
+Options:
+1. Generate
+2. Solve
+3. Generate and Solve
+------------------------------------------------
++ "Parameters:\n"
++ " -g (generate)			        generate a random board\n"
++ " -s (solve)			    	solves provided board or the generated board\n"
++ " -t TOTAL_BOTS		total bots on the board, must be less than 10 (default max 6 in actual game)\n"
++ " -min MINIMUM_STEPS	the minimum steps required to solve or generate the solution\n"
++ " -max MAXIMUM_STEPS	the maximum steps required to solve or generate the solution\n"
++ " -in JSONFILE		indicates JSON file/filepath of board data to be solved\n"
++ " -out FILE/JSONFILE	indicates file/filepath of the solution and or board JSON to be outputted to after\n"
++ " -p (print json)					prints the json of the solved or generated board\n"
++ " -verbose (more output)				shows all processing console output\n";
+--------------------------------------------------
+
+PSEUDO CODE:
+
+create board = null
+Solution boardSol = null
+
+if (generate)
+	board = generate board off args
+	if (-p)
+		print(gen_board.json)
+	end
+	print(gen_board.layout)
+end
+if (solve)
+	// Generate and solve
+	if (board == null)
+	// if just solving and no board generated
+		if (-in)
+			board = parseJSON(jsoninputfile.line1)
+		else 
+			Array botArray
+			loop TOTAL_BOTS
+				bot[i] = user input (x, y)
+			end
+			board = new Board(botArray)
+		end
+	end
+	boardSol = solve(board, -min, -max, -verbose)
+	print s.solutionString
+end
+
+// Final file output
+if (-out)
+	File outputFile = new File(outputFILEPATH)
+	String otherData = board.layout
+	if (solve)
+		otherdata += new line + solutionString
+	end
+	outputFile.write.onLine1(board.toJSON)
+	outputFile.write.afterLine1(otherData)
+end

@@ -1,0 +1,33 @@
+total moves possible: NumOfRobots * 4 ^ maxSteps
+ex. 4 robots and 8 max steps allowed.
+    There are 4,294,967,296 moves possible
+
+******************************************************************************
+Here lies pseudo code for the private recursive method within the Solver class
+******************************************************************************
+
+to solve any problem:
+Robot[] robots = new Robot[4]
+solve(robots, 0, 10)
+	
+func solve (Array robots, int StepNum, int maxSteps)
+	// Don't search for more than the total amount of steps allowed
+	if (StepNum > maxSteps)
+		return
+	
+	loop through robots
+		// Solution was found
+		if playerRobot is in middle
+			break return
+			if possible move for robot i that does not undo last move (would create a loop otherwise) 
+				robotCopy = robots.copy
+				robotCopy.moveRobot(i, newX, newY)
+				solve(robotCopy, stepNum + 1, maxSteps)
+			end
+		end
+	end
+	
+	// If went through all possibilties
+	if (stepNum == 0)
+		print "no solution found"
+end
