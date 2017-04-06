@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 public class Main {
 	
 	public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Main {
 		// Generation
 		boolean doGen = false; // generate a random solve-able board?
 		int totalBots = 6;
-		int minSteps = 5; // minimum steps for solving
+		int minSteps = 1; // minimum steps for solving
 		int maxSteps = 10; // maximum generation for solving
 		// Solving
 		boolean doSolve = false; // solve a board?
@@ -112,8 +113,13 @@ public class Main {
 			}
 		}
 		
+		// Error checking
 		if (doSolve == false && doGen == false) {
 			System.out.println("Please provide -g to gen or -s to solve ... Type --help for help");
+			return;
+		}
+		if (minSteps > maxSteps) {
+			System.out.println("Cannot have the minimum steps more than the maximum!");
 			return;
 		}
 		
@@ -232,7 +238,7 @@ public class Main {
 			}
 			// Solve 
 			Solver solver = new Solver();
-			level.setSolution(solver.solve(level.getBoard(), maxSteps, true));
+			level.setSolution(solver.solve(level.getBoard(), minSteps, maxSteps, true));
 			
 		}
 		// Final file output handling

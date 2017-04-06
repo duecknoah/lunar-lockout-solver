@@ -8,13 +8,13 @@ public class Solver {
 	// always intially be 0.
 	// Returns Solution if solution found
 	// Returns null otherwise
-	public Solution solve(Board board, int maxSteps, boolean doPrintActions) {
+	public Solution solve(Board board, int minSteps, int maxSteps, boolean doPrintActions) {
 		if (doPrintActions) {
 			System.out.println("Solving a board of " + board.getRobots().size() + " robots");
 			System.out.println("Max Steps: " + maxSteps);
 			System.out.println("...");
 		}
-		int i = 1;
+		int i = minSteps;
 		Solution finalSol = null;
 		// This is done to prevent using repeat moves to eventually get
 		// the end solution. Doing this finds the minimum amount of moves

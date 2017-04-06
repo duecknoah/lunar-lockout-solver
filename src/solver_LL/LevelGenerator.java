@@ -37,7 +37,7 @@ public class LevelGenerator {
 		// until found a random solution
 		while (!foundSol) {
 			genBoard = genRandBoard();
-			sol = solver.solve(genBoard, maxSteps, false);
+			sol = solver.solve(genBoard, minSteps, maxSteps, false);
 			// If solution found, break out of loop!
 			if (sol != null) {
 				if (sol.getTotalMoveCount() >= minSteps && sol.getTotalMoveCount() <= maxSteps) {
