@@ -12,7 +12,7 @@
 This program attempts to generate and/or solve any Lunar Lockout level. Using the parameters below, it can read off a JSON input file, the generated level, or user input. It can then output that board data and solution and board data into a board file.
 
 ## How to use it
-- Download the lunar-lockout-solver.jar file
+- [Download](https://github.com/duecknoah/lunar-lockout-solver/releases) the lunar-lockout-solver.jar file
 - Open your command-line (CMD for windows, Terminal for Mac and Linux)
 - Change your current directory to the location of the jar file you downloaded by typing:
 ```
