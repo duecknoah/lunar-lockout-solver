@@ -20,31 +20,31 @@ cd /directory/to/jarfile/
 ```
 To get the help screen, type:
 ```
-java -jar lunar-lockout-solver --help
+java -jar LLSolver.jar --help
 ```
 ## Now the fun part
 ### Generating levels
 To generate a lunar lockout level with 4 total robots, a minimum of 5 steps to solve, and a maximum of 10 steps to solve. Type:
 ```
-java -jar lunar-lockout-solver -g -t 4 -min 5 -max 10
+java -jar LLSolver.jar -g -t 4 -min 5 -max 10
 ``` 
 To to generate a board with 3 robots, a minimum of 2 steps, a maximum of 10 steps, and output it to the board file generatedBoard.dat
 ```
-java -jar lunar-lockout-solver -g -t 3 -min 2 -max 10 -out "generatedBoard.dat"
+java -jar LLSolver.jar -g -t 3 -min 2 -max 10 -out "generatedBoard.dat"
 ``` 
 ### Solving levels
 If you want to solve a board off of board data via user input and output the board file, type:
 ```
-java -jar lunar-lockout-solver -s -out "solvedBoard.dat"
+java -jar LLSolver.jar -s -out "solvedBoard.dat"
 ```
 If you want to solve a board off of a created board file:
 ```
-java -jar lunar-lockout-solver -s -in "generatedBoard.dat" -out "solvedBoard.dat"
+java -jar LLSolver.jar -s -in "generatedBoard.dat" -out "solvedBoard.dat"
 ```
 ### Generating and Solving
 If you want to be fancy, you can generate and solve the generated board all in one go:
 ```
-java -jar lunar-lockout-solver -g -s -t 5 -min 5 -max 10 -out "solvedBoard.dat"
+java -jar LLSolver.jar -g -s -t 5 -min 5 -max 10 -out "solvedBoard.dat"
 ```
 
 
