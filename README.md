@@ -23,7 +23,7 @@ To get the help screen, type:
 java -jar LLSolver.jar --help
 ```
 ## Now the fun part
-### Generating levels
+### Generating Solvable levels
 To generate a lunar lockout level with 4 total robots, a minimum of 5 steps to solve, and a maximum of 10 steps to solve. Type:
 ```
 java -jar LLSolver.jar -g -t 4 -min 5 -max 10
