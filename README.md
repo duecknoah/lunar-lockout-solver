@@ -56,19 +56,21 @@ Board files contain data in this order:
 
 #### An example of a Board File:
 ```JSON
-[{"isPlayer":true,"color":"Red","pos":{"x":1,"y":3},"posPrev":{"x":1,"y":3}},{"isPlayer":false,"color":"Orange","pos":{"x":4,"y":3},"posPrev":{"x":4,"y":3}},{"isPlayer":false,"color":"Yellow","pos":{"x":1,"y":1},"posPrev":{"x":1,"y":1}},{"isPlayer":false,"color":"Green","pos":{"x":1,"y":4},"posPrev":{"x":1,"y":4}}]
+[{"isPlayer":true,"color":"Red","pos":{"x":2,"y":4},"posPrev":{"x":2,"y":4}},{"isPlayer":false,"color":"Orange","pos":{"x":4,"y":4},"posPrev":{"x":4,"y":4}},{"isPlayer":false,"color":"Yellow","pos":{"x":2,"y":3},"posPrev":{"x":2,"y":3}},{"isPlayer":false,"color":"Green","pos":{"x":1,"y":1},"posPrev":{"x":1,"y":1}},{"isPlayer":false,"color":"Blue","pos":{"x":4,"y":1},"posPrev":{"x":4,"y":1}},{"isPlayer":false,"color":"Purple","pos":{"x":1,"y":3},"posPrev":{"x":1,"y":3}}]
 
 Board data:
-Player Robot (Red) at position (1, 3)
-Robot (Orange) at position (4, 3)
-Robot (Yellow) at position (1, 1)
-Robot (Green) at position (1, 4)
+Player Robot (Red) at position (2, 4)
+Robot (Orange) at position (4, 4)
+Robot (Yellow) at position (2, 3)
+Robot (Green) at position (1, 1)
+Robot (Blue) at position (4, 1)
+Robot (Purple) at position (1, 3)
 
 Solution:
 Total moves: 5
-1: Red up
-2: Red down
-3: Red up
-4: Red down
-5: Red right
+1: Red right
+2: Orange up
+3: Green down
+4: Green right
+5: Red up
 ```
